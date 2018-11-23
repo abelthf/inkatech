@@ -1,0 +1,15 @@
+# base image
+FROM python:3.7.0
+
+# estableciendo directorio de trabajo
+WORKDIR /usr/src/app
+
+# agregando e instalando requierimientos
+COPY ./requirements.txt /usr/src/app/requirements.txt
+RUN pip install -r requirements.txt
+
+# copiando app
+COPY . /usr/src/app
+
+# ejecutando servidor
+CMD python manage.py run -h 0.0.0.0
