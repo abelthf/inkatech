@@ -1,10 +1,22 @@
 # services/users/manage.py
 
 import unittest  # nuevo
+import coverage
 from flask.cli import FlaskGroup
 
 from project import create_app, db     # nuevo
 from project.api.models import User     # nuevo
+
+COV = coverage.coverage(
+    branch=True,
+    include='project/*',
+    omit=[
+        'project/tests/*',
+        'project/config.py',
+    ]
+)
+COV.start()
+
 
 app = create_app()  # nuevo
 cli = FlaskGroup(create_app=create_app) # nuevo
@@ -30,6 +42,21 @@ def test():
     tests = unittest.TestLoader().discover('project/tests', pattern='test*.py')
     result = unittest.TextTestRunner(verbosity=2).run(tests)
     if result.wasSuccessful():
+        return 0
+    return 1
+
+@cli.command()
+def cov():
+    """Ejecutar pruebas unitarias de cobertura."""
+    tests = unittest.TestLoader().discover('project/tests')
+    result = unittest.TextTestRunner(verbosity=2).run(tests)
+    if result.wasSuccessful():
+        COV.stop()
+        COV.save()
+        print('Resumen de cobertura:')
+        COV.report()
+        COV.html_report()
+        COV.erase()
         return 0
     return 1
 

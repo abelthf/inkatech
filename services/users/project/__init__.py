@@ -8,7 +8,8 @@ from flask_sqlalchemy import SQLAlchemy     # nuevo
 
 
 # instanciado la db
-db = SQLAlchemy()    # nuevo
+db = SQLAlchemy()
+
 
 # nuevo
 def create_app(script_info=None):
@@ -29,6 +30,6 @@ def create_app(script_info=None):
     # contexto shell para flask cli
     @app.shell_context_processor
     def ctx():
-        return {'app': app, 'db':db}
+        return {'app': app, 'db': db}
 
     return app
