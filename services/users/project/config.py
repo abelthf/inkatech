@@ -1,11 +1,13 @@
 # services/users/project/config.py
 
+
 import os # nuevo
 
 class BaseConfig:
     """Configuracion base"""
     TESTING = False
-    SQLALCHEMY_TRACK_MODIFICATIONS = False # nuevo
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECRET_KEY = 'my_secretkey'
 
 
 class DevelopmentConfig(BaseConfig):

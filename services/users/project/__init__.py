@@ -1,9 +1,11 @@
 # services/users/project/__init__.py
 
+
 import os
 
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy     # nuevo
+
 
 # Istanciado la app
 app = Flask(__name__)
@@ -28,10 +30,7 @@ class User(db.Model):   # nuevo
         self.username = username
         self.email = email
 
-# Establecer configuracion
-app.config.from_object('project.config.DevelopmentConfig')
-
-
+# rutas
 @app.route('/users/ping', methods=['GET'])
 def ping_pong():
     return jsonify({
