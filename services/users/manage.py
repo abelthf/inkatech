@@ -3,20 +3,21 @@
 import unittest  # nuevo
 from flask.cli import FlaskGroup
 
-from project import app, db     # nuevo
+from project import create_app, db     # nuevo
+from project.api.models import User     # nuevo
+
+app = create_app()  # nuevo
+cli = FlaskGroup(create_app=create_app) # nuevo
 
 
-cli = FlaskGroup(app)
 
-
-# nuevo
 @cli.command()
 def recreate_db():
     db.drop_all()
     db.create_all()
     db.session.commit()
 
-# nuevo
+
 @cli.command()
 def test():
     """ Ejecutar las pruebas sin covertura de codigo"""
@@ -25,6 +26,7 @@ def test():
     if result.wasSuccessful():
         return 0
     return 1
+
 
 if __name__ == '__main__':
     cli()
